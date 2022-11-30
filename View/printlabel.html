@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../asset/style.css">
+</head>
+<body>
+
+    
+   <div class="labelProDuct">
+    <div class="label">
+        <div class="content__left">
+          <p>TV Phương Thảo</p>
+          <p>2297 Trần Hưng Đạo, Mỹ Thới, LXAG</p>
+        </div>
+        <div class="content__right">
+          <p>${item.inpType}</p>
+        <p>TKL: ${item.inpKTL}  KLH: ${item.inpKLH}</p>
+        <p>KLV: </p>
+        <p>CH: ${item.inpCH}  HLV: ${item.inpHLV}</p>
+        </div>
+         </div>
+  </div>     
+
+  <div id="tblDanhSachSP" style="display:none"></div>
+  <div id="idProDuct" style="display:none"></div>
+</body>
+
+<script src="../Modal/Product.js"></script>
+<script src="../Controllers/Validation.js"></script>
+  <script src="../Controllers/DanhSachSanPham.js"></script>
+  <script src="../Controllers/main.js"></script>
+  <script>
+        printAll()
+        
+  </script>
+  <!-- <script src="../Controllers/intem.js"></script> -->
+</html>

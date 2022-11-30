@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,html{
+    font-family: Tahoma;
+    font-size: 6px;
+    font-weight: bold;
+    background: gray;
+}
+
+.label{
+    height: 9mm;
+    width: 80mm;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background: white;
+}
+
+.content__left, .content__right{
+    width: 20mm;
+    text-align: center;
+}

@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    color: #555;
+    line-height: 1.7;
+    /* font-size: 14px; */
+    font-weight: 400;
+    font-family: Lato, sans-serif;
+}
+
+header {
+    background: #e7c8b2;
+}
+   
+button {
+    background-image: linear-gradient(to right, #000000 0%, #434343  51%, #000000  100%);
+    margin: 5px;
+    padding: 5px 15px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+  }
+
+  button:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .printALL{
+    background-image: linear-gradient(to right, #000000 0%, #434343  51%, #000000  100%);
+    margin: 5px;
+    padding: 8px 15px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+  }
+ 
+  .printALL:hover{
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;  
+}
+
