@@ -19,8 +19,8 @@ const renderSP = (mang) => {
     <td>${inpType}</td>
     <td>${inpKTL}</td>
     <td>${inpKLH}</td>
-    <td>${inpCH}</td>
     <td>${inpKLV}</td>
+    <td>${inpCH}</td>
     <td class="d-flex">
     <button onclick="xemSP(${index})" id="xemSPChiTiet"><i class="fa-solid fa-eye"></i></button>
     <button onclick="xoaSP(${index})"><i class="fa-solid fa-trash"></i></button>
