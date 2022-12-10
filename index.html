@@ -41,9 +41,12 @@
             <label for="exampleInputPassword1">Loại sản phẩm</label>
             <select class="custom-select formProduct" id="inpType">
               <option>Chọn loại sản phẩm</option>
-                <option>Nhẫn nam bọng</option>
-                <option>Nhẫn nam đúc</option>
-                <option>Nhẫn</option>
+                <option>Nhẫn nam</option>
+                <option>Nhẫn nữ</option>
+                <option>Bông</option>
+                <option>Dây</option>
+                <option>Lắc</option>
+                <option>Mặt</option>
             </select>
             <div class="invalid-feedback valid8"></div>
         </div>
@@ -57,16 +60,18 @@
             <input type="text" class="form-control formProduct" id="inpKLH">
             <div class="invalid-feedback valid3"></div>
         </div>
+        
         <div class="form-group col-12">
-            <label for="exampleInputPassword1">Công hột (CH)</label>
-            <input type="text" class="form-control formProduct" id="inpCH">
-            <div class="invalid-feedback valid4"></div>
-        </div>
-        <div class="form-group col-12">
-            <label for="exampleInputPassword1">Hàm lượng vàng (HLV)</label>
-            <input type="text" class="form-control formProduct" id="inpHLV">
+            <label for="exampleInputPassword1">Khối lượng vàng (KLV)</label>
+            <input type="text" class="form-control formProduct" id="inpKLV">
             <div class="invalid-feedback valid5"></div>
         </div>
+
+        <div class="form-group col-12">
+          <label for="exampleInputPassword1">Công hột (CH)</label>
+          <input type="text" class="form-control formProduct" id="inpCH">
+          <div class="invalid-feedback valid4"></div>
+      </div>
 
         <div class="form-group col-12 d-none">
           <label for="exampleInputPassword1">ID SP</label>
@@ -83,7 +88,7 @@
    <!-- <button class="btn btn-success">Cập nhật sản phẩm</button> -->
 </form>
 <div class="col-6">
-  <table class="table table-striped table-hover text-center ">
+  <table class="table table-striped text-center ">
     <thead>
       <th scope="col">#</th>
       <th scope="col">Loại SP</th>

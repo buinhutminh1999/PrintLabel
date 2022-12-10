@@ -4,17 +4,26 @@
     box-sizing: border-box;
 }
 
+body{
+  background: url(https://images.pexels.com/photos/47047/gold-ingots-golden-treasure-47047.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 body,
 html {
-    color: #555;
+    color: white;
     line-height: 1.7;
     /* font-size: 14px; */
     font-weight: 400;
     font-family: Lato, sans-serif;
+
 }
 
 header {
-    background: #e7c8b2;
+    /* background: #e7c8b2; */
 }
    
 button {
@@ -56,3 +65,13 @@ button {
     text-decoration: none;  
 }
 
+.table{
+  opacity: 0.9;
+    background-image: linear-gradient(to right, #232526 0%, #414345 51%, #232526 100%);
+    color: white;
+}
+
+label{
+  font-weight: bold;
+  color: white;
+}
