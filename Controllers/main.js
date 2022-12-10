@@ -1,4 +1,7 @@
 
+/*
+Source code được phát triển bởi BuiNhutMinh
+*/ 
 const validation = new Validation()
 const dssp = new DanhSachSanPham()
 
@@ -10,7 +13,9 @@ const getMyEle = (select) => {
   return document.querySelector(select)
 }
 
+
 const renderSP = (mang) => {
+
   let count = 0;
   let newArr = mang.map((item, index) => {
     let { inpType, inpKTL, inpKLH, inpCH, inpKLV } = item
@@ -27,14 +32,16 @@ const renderSP = (mang) => {
     </td>
     </tr>`
   })
-  document.getElementById('tblDanhSachSP').innerHTML = newArr.join('') + `<tr>
+  
+  getMyEle('#tfDanhSachSP').innerHTML = `<tr>
   <td class="text-right" colspan="7">
   <div class="d-flex align-items-center justify-content-end">
   <button onclick="deleteall()">Xóa tất cả</button>
-  <a  href="./View/printlabel.html" target="_blank" class="printALL">In tất cả</a>
+  <a href="./View/printlabel.html" target="_blank" class="printALL">In tất cả</a>
   </div>
   </td>
   </tr>`
+  getMyEle('#tblDanhSachSP').innerHTML = newArr.join('')
 }
 
 const printAll = () => {
@@ -57,7 +64,6 @@ const printAll = () => {
   document.querySelector('.labelProDuct').innerHTML = newArr.join('')
   getLocal()
   window.print()
-
 }
 
 const setLocal = () => {
@@ -92,7 +98,6 @@ const themSP = () => {
     let sp = new SanPham(inpType, inpKTL.replace(/\s/g, ""), inpKLH.replace(/\s/g, ""), inpCH.replace(/\s/g, ""), inpKLV.replace(/\s/g, ""), idProDuct.replace(/\s/g, ""));
     dssp.themSP(sp)
     renderSP(dssp.mangDS)
-    
     clearData()
     setLocal()
     randomInput()
@@ -152,8 +157,9 @@ const clearData = () => {
 const deleteall = () => {
   if (confirm('Dữ liệu đã được thêm sẽ được xóa hết. Nhấn Yes để XÓA hoặc CANCEL để hủy hành động này.')) {
     dssp.mangDS = [];
+    getMyEle('#tblDanhSachSP').innerHTML = `<tr><td colspan="7">Dữ liệu trống</td></tr>`
+    getMyEle('#tfDanhSachSP').innerHTML = ''
     setLocal();
-    getLocal();
     return true
   }
   return false

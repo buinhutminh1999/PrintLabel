@@ -35,7 +35,7 @@
 
   <section class="addProduct p-5 text-dark">
  <div class="row">
-  <form class="col-6">
+  <form class="col-3">
     <div class="row">
         <div class="form-group col-12">
             <label for="exampleInputPassword1">Loại sản phẩm</label>
@@ -69,7 +69,7 @@
 
         <div class="form-group col-12">
           <label for="exampleInputPassword1">Công hột (CH)</label>
-          <input type="text" class="form-control formProduct" id="inpCH">
+          <input type="text" class="form-control formProduct" id="inpCH" value=".000">
           <div class="invalid-feedback valid4"></div>
       </div>
 
@@ -87,7 +87,7 @@
    </div>
    <!-- <button class="btn btn-success">Cập nhật sản phẩm</button> -->
 </form>
-<div class="col-6">
+<div class="col-9">
   <table class="table table-striped text-center ">
     <thead>
       <th scope="col">#</th>
@@ -99,12 +99,19 @@
       <th scope="col"></th>
     </thead>
     <tbody id="tblDanhSachSP">
-      
+      <tr><td colspan="7">Dữ liệu trống</td></tr>
     </tbody>
+    <tfoot id="tfDanhSachSP" class="">
+      
+    </tfoot>
   </table>
 </div>
  </div>
   </section>
+
+  <footer class="footer">
+    <p class="text-center">Design by Bui Nhut Minh</p>
+  </footer>
    <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
