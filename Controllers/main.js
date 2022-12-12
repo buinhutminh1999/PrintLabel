@@ -14,12 +14,31 @@ const getMyEle = (select) => {
 }
 
 
+// const checkMangRong = () => { 
+//   let mang = dssp.mangDS
+//   if(mang == 0){
+//     getMyEle('#tfDanhSachSP').style = 'display:none'
+//   }else{
+//     getMyEle('#tfDanhSachSP').style = 'display:block'
+//     return `<tr>
+//     <td class="text-right" colspan="7">
+//     <div class="d-flex align-items-center justify-content-end">
+//     <button onclick="deleteall()">Xóa tất cả</button>
+//     <a href="./View/printlabel.html" target="_blank" class="printALL">In tất cả</a>
+//     </div>
+//     </td>
+//     </tr>`
+//   }
+ 
+//  }
+
+
 const renderSP = (mang) => {
 
   let count = 0;
   let newArr = mang.map((item, index) => {
     let { inpType, inpKTL, inpKLH, inpCH, inpKLV } = item
-    return `<tr>
+    return `<tr id="test">
     <td>${++count}</td>
     <td>${inpType}</td>
     <td>${inpKTL}</td>
@@ -33,14 +52,16 @@ const renderSP = (mang) => {
     </tr>`
   })
   
+  // let check = checkMangRong()
+  
   getMyEle('#tfDanhSachSP').innerHTML = `<tr>
-  <td class="text-right" colspan="7">
-  <div class="d-flex align-items-center justify-content-end">
-  <button onclick="deleteall()">Xóa tất cả</button>
-  <a href="./View/printlabel.html" target="_blank" class="printALL">In tất cả</a>
-  </div>
-  </td>
-  </tr>`
+     <td class="text-right" colspan="7">
+     <div class="d-flex align-items-center justify-content-end">
+     <button onclick="deleteall()">Xóa tất cả</button>
+     <a href="./View/printlabel.html" target="_blank" class="printALL">In tất cả</a>
+     </div>
+     </td>
+     </tr>`
   getMyEle('#tblDanhSachSP').innerHTML = newArr.join('')
 }
 
@@ -105,9 +126,18 @@ const themSP = () => {
 }
 
 const xoaSP = (id) => {
-  dssp.mangDS.splice(id, 1)
-  setLocal()
-  getLocal()
+  if(dssp.mangDS.length == 1){
+    getMyEle('#tblDanhSachSP').innerHTML = `<tr><td colspan="7">Dữ liệu trống</td></tr>`
+    getMyEle('#tfDanhSachSP').innerHTML = ''
+    dssp.mangDS = []
+    setLocal()
+  }else{
+    dssp.mangDS.splice(id, 1)
+    document.querySelector("#tblDanhSachSP").deleteRow(id);//xóa table
+    setLocal()
+    getLocal()
+  }
+ 
 }
 
 const xemSP = (id) => {
@@ -163,4 +193,5 @@ const deleteall = () => {
     return true
   }
   return false
+  
 }
