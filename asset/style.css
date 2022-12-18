@@ -12,12 +12,13 @@ body,html{
 }
 
 .label{
-    height: 9mm;
-    width: 80mm;
+    /* height: 9.2604mm;
+    width: 80mm;   */
     display: flex;
     text-align: center;
     align-items: center;
     background: white;
+    padding: 1mm;
 }
 
 .content__left, .content__right{

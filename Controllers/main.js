@@ -1,7 +1,10 @@
 
 /*
 Source code được phát triển bởi BuiNhutMinh
-*/ 
+*/
+import SanPham from "../Modal/Product.js"
+import Validation from "./Validation.js"
+import DanhSachSanPham from "./DanhSachSanPham.js"
 const validation = new Validation()
 const dssp = new DanhSachSanPham()
 
@@ -13,30 +16,13 @@ const getMyEle = (select) => {
   return document.querySelector(select)
 }
 
-
-// const checkMangRong = () => { 
-//   let mang = dssp.mangDS
-//   if(mang == 0){
-//     getMyEle('#tfDanhSachSP').style = 'display:none'
-//   }else{
-//     getMyEle('#tfDanhSachSP').style = 'display:block'
-//     return `<tr>
-//     <td class="text-right" colspan="7">
-//     <div class="d-flex align-items-center justify-content-end">
-//     <button onclick="deleteall()">Xóa tất cả</button>
-//     <a href="./View/printlabel.html" target="_blank" class="printALL">In tất cả</a>
-//     </div>
-//     </td>
-//     </tr>`
-//   }
- 
-//  }
-
-
 const renderSP = (mang) => {
-
-  let count = 0;
-  let newArr = mang.map((item, index) => {
+  if(dssp.mangDS.length == 0){// nếu dữ liệu trống trả về dữ liệu trống
+    getMyEle('#tblDanhSachSP').innerHTML = `<tr><td colspan="7">Dữ liệu trống</td></tr>`
+    getMyEle('#tfDanhSachSP').innerHTML = ''
+  }else{
+    let count = 0;
+    let newArr = mang.map((item, index) => {
     let { inpType, inpKTL, inpKLH, inpCH, inpKLV } = item
     return `<tr id="test">
     <td>${++count}</td>
@@ -51,18 +37,16 @@ const renderSP = (mang) => {
     </td>
     </tr>`
   })
-  
-  // let check = checkMangRong()
-  
   getMyEle('#tfDanhSachSP').innerHTML = `<tr>
-     <td class="text-right" colspan="7">
-     <div class="d-flex align-items-center justify-content-end">
-     <button onclick="deleteall()">Xóa tất cả</button>
-     <a href="./View/printlabel.html" target="_blank" class="printALL">In tất cả</a>
-     </div>
-     </td>
-     </tr>`
+    <td class="text-right" colspan="7">
+    <div class="d-flex align-items-center justify-content-end">
+    <button onclick="deleteall()">Xóa tất cả</button>
+    <a href="./View/printlabel.html" target="_blank" class="printALL">In tất cả</a>
+    </div>
+    </td>
+    </tr>`
   getMyEle('#tblDanhSachSP').innerHTML = newArr.join('')
+  }
 }
 
 const printAll = () => {
@@ -83,9 +67,14 @@ const printAll = () => {
    </div>`
   })
   document.querySelector('.labelProDuct').innerHTML = newArr.join('')
+ 
   getLocal()
-  window.print()
+
 }
+
+window.printAll = printAll
+
+export default printAll
 
 const setLocal = () => {
   localStorage.setItem('DSSP', JSON.stringify(dssp.mangDS))
@@ -95,12 +84,10 @@ const getLocal = () => {
   if (localStorage.getItem('DSSP') != null) {
     dssp.mangDS = JSON.parse(localStorage.getItem('DSSP'))
     renderSP(dssp.mangDS)
-    
   }
 }
 
 getLocal()
-
 
 const themSP = () => {
   let productVal = {}
@@ -125,20 +112,16 @@ const themSP = () => {
   }
 }
 
+window.themSP = themSP
+
 const xoaSP = (id) => {
-  if(dssp.mangDS.length == 1){
-    getMyEle('#tblDanhSachSP').innerHTML = `<tr><td colspan="7">Dữ liệu trống</td></tr>`
-    getMyEle('#tfDanhSachSP').innerHTML = ''
-    dssp.mangDS = []
-    setLocal()
-  }else{
     dssp.mangDS.splice(id, 1)
-    document.querySelector("#tblDanhSachSP").deleteRow(id);//xóa table
     setLocal()
     getLocal()
-  }
- 
+  
 }
+
+window.xoaSP = xoaSP
 
 const xemSP = (id) => {
   document.querySelector('.themSP').innerHTML = `<button onclick="updateSP(${id})" type="button">Lưu</button>`
@@ -147,7 +130,9 @@ const xemSP = (id) => {
   }
 }
 
-const updateSP = (id) => {
+window.xemSP = xemSP
+
+let updateSP = (id) => {
   let objUpdate = {}
   let productVal = getMyEleAll('.formProduct')
   for (const element of productVal) {
@@ -155,21 +140,20 @@ const updateSP = (id) => {
     objUpdate = { ...objUpdate, [id]: value }
   }
   let { inpType, inpKTL, inpKLH, inpCH, inpKLV, idProDuct } = objUpdate;
-  let updateSP = new SanPham(inpType, inpKTL, inpKLH, inpCH, inpKLV, idProDuct)
-  console.log(updateSP)
+  let spNew = new SanPham(inpType, inpKTL, inpKLH, inpCH, inpKLV, idProDuct)
+  console.log(spNew)
 
   // ví dụ code cũ để cập nhật được thì cho dssp.mangds[vitri] = update (update là obj)
   for (const index in dssp.mangDS[id]) { // muốn hiểu code thế nào thì so sánh cách cũ rồi thay thế code mới 
-    dssp.mangDS[id] = updateSP
+    dssp.mangDS[id] = spNew
   }
-
   document.querySelector('.themSP').innerHTML = `<button onclick="themSP()" type="button" id="btnThem">Thêm sản phẩm</button>`
   clearData()
   randomInput()
   setLocal()
   renderSP(dssp.mangDS)
 }
-
+window.updateSP = updateSP
 const randomInput = () => {
   document.querySelector('#idProDuct').value = Math.random()
   document.querySelector('#idProDuct').disabled = true
@@ -179,7 +163,7 @@ randomInput()
 
 const clearData = () => {
   let allProduct = getMyEleAll('.formProduct')
-  for (const element of allProduct ) {
+  for (const element of allProduct) {
     document.getElementById(element.id).value = ''
   }
 }
@@ -193,5 +177,7 @@ const deleteall = () => {
     return true
   }
   return false
-  
+
 }
+
+window.deleteall = deleteall

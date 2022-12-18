@@ -1,13 +1,12 @@
-function DanhSachSanPham() {
+export default class DanhSachSanPham {
+    constructor() { }
+    mangDS = [];
 
-    this.mangDS = [];
-
-    this.themSP = function (sv) {
-
+    themSP(sv) {
         this.mangDS.push(sv);
     }
 
-    this.timViTri = function(id) {
+    timViTri(id) {
         let viTri = -1;
         viTri = this.mangDS.findIndex((item) => {
             return item.id == id
