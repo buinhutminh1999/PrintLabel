@@ -7,24 +7,35 @@ import Validation from "./Validation.js"
 import DanhSachSanPham from "./DanhSachSanPham.js"
 const validation = new Validation()
 const dssp = new DanhSachSanPham()
-
-const getMyEleAll = (select) => {
-  return document.querySelectorAll(select)
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
 }
 
-const getMyEle = (select) => {
-  return document.querySelector(select)
-}
+window.toggleFullScreen = toggleFullScreen
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    toggleFullScreen();
+  }
+}, false);
+
+
+const getMyEle = (select) => { 
+  return document.querySelector(select);
+ }
 
 const renderSP = (mang) => {
-  if(dssp.mangDS.length == 0){// nếu dữ liệu trống trả về dữ liệu trống
+  if (dssp.mangDS.length == 0) {// nếu dữ liệu trống trả về dữ liệu trống
     getMyEle('#tblDanhSachSP').innerHTML = `<tr><td colspan="7">Dữ liệu trống</td></tr>`
     getMyEle('#tfDanhSachSP').innerHTML = ''
-  }else{
+  } else {
     let count = 0;
     let newArr = mang.map((item, index) => {
-    let { inpType, inpKTL, inpKLH, inpCH, inpKLV } = item
-    return `<tr id="test">
+      let { inpType, inpKTL, inpKLH, inpCH, inpKLV } = item
+      return `<tr id="test">
     <td>${++count}</td>
     <td>${inpType}</td>
     <td>${inpKTL}</td>
@@ -36,8 +47,8 @@ const renderSP = (mang) => {
     <button onclick="xoaSP(${index})"><i class="fa-solid fa-trash"></i></button>
     </td>
     </tr>`
-  })
-  getMyEle('#tfDanhSachSP').innerHTML = `<tr>
+    })
+    getMyEle('#tfDanhSachSP').innerHTML = `<tr>
     <td class="text-right" colspan="7">
     <div class="d-flex align-items-center justify-content-end">
     <button onclick="deleteall()">Xóa tất cả</button>
@@ -45,7 +56,7 @@ const renderSP = (mang) => {
     </div>
     </td>
     </tr>`
-  getMyEle('#tblDanhSachSP').innerHTML = newArr.join('')
+    getMyEle('#tblDanhSachSP').innerHTML = newArr.join('')
   }
 }
 
@@ -67,7 +78,7 @@ const printAll = () => {
    </div>`
   })
   document.querySelector('.labelProDuct').innerHTML = newArr.join('')
- 
+
   getLocal()
 
 }
@@ -115,22 +126,35 @@ const themSP = () => {
 window.themSP = themSP
 
 const xoaSP = (id) => {
-    dssp.mangDS.splice(id, 1)
-    setLocal()
-    getLocal()
-  
+  dssp.mangDS.splice(id, 1)
+  setLocal()
+  getLocal()
+
 }
 
 window.xoaSP = xoaSP
 
 const xemSP = (id) => {
-  document.querySelector('.themSP').innerHTML = `<button onclick="updateSP(${id})" type="button">Lưu</button>`
+  document.querySelector('.themSP').innerHTML = `
+
+  <button onclick="updateSP(${id})" type="button">Lưu</button>
+  
+ <button type="button" onclick="huyBoHD()">Hủy bỏ</button>`
+  
+
+
   for (const element in dssp.mangDS[id]) {
     document.getElementById(element).value = dssp.mangDS[id][element] //obj: dssp.mangDS[id] [element]:gọi đến key của đt ]
   }
 }
 
 window.xemSP = xemSP
+
+const huyBoHD = () => { 
+  getMyEle('.themSP').innerHTML = `<button onclick = "themSP()" type="button" id ="btnThem" >Thêm sản phẩm</> `
+ }
+
+ window.huyBoHD = huyBoHD
 
 let updateSP = (id) => {
   let objUpdate = {}
@@ -147,7 +171,7 @@ let updateSP = (id) => {
   for (const index in dssp.mangDS[id]) { // muốn hiểu code thế nào thì so sánh cách cũ rồi thay thế code mới 
     dssp.mangDS[id] = spNew
   }
-  document.querySelector('.themSP').innerHTML = `<button onclick="themSP()" type="button" id="btnThem">Thêm sản phẩm</button>`
+  document.querySelector('.themSP').innerHTML = `< button onclick = "themSP()" type = "button" id = "btnThem" > Thêm sản phẩm</ > `
   clearData()
   randomInput()
   setLocal()
@@ -171,7 +195,7 @@ const clearData = () => {
 const deleteall = () => {
   if (confirm('Dữ liệu đã được thêm sẽ được xóa hết. Nhấn Yes để XÓA hoặc CANCEL để hủy hành động này.')) {
     dssp.mangDS = [];
-    getMyEle('#tblDanhSachSP').innerHTML = `<tr><td colspan="7">Dữ liệu trống</td></tr>`
+    getMyEle('#tblDanhSachSP').innerHTML = `< tr > <td colspan="7">Dữ liệu trống</td></ > `
     getMyEle('#tfDanhSachSP').innerHTML = ''
     setLocal();
     return true
