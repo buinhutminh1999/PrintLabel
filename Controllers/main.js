@@ -23,9 +23,15 @@ document.addEventListener("keydown", (e) => {
 }, false);
 
 
-const getMyEle = (select) => { 
+const getMyEle = (select) => {
   return document.querySelector(select);
- }
+}
+
+const getMyEleAll = (select) => {
+  return document.querySelectorAll(select);
+}
+
+
 
 const renderSP = (mang) => {
   if (dssp.mangDS.length == 0) {// nếu dữ liệu trống trả về dữ liệu trống
@@ -140,7 +146,7 @@ const xemSP = (id) => {
   <button onclick="updateSP(${id})" type="button">Lưu</button>
   
  <button type="button" onclick="huyBoHD()">Hủy bỏ</button>`
-  
+
 
 
   for (const element in dssp.mangDS[id]) {
@@ -150,11 +156,11 @@ const xemSP = (id) => {
 
 window.xemSP = xemSP
 
-const huyBoHD = () => { 
+const huyBoHD = () => {
   getMyEle('.themSP').innerHTML = `<button onclick = "themSP()" type="button" id ="btnThem" >Thêm sản phẩm</> `
- }
+}
 
- window.huyBoHD = huyBoHD
+window.huyBoHD = huyBoHD
 
 let updateSP = (id) => {
   let objUpdate = {}
@@ -171,7 +177,7 @@ let updateSP = (id) => {
   for (const index in dssp.mangDS[id]) { // muốn hiểu code thế nào thì so sánh cách cũ rồi thay thế code mới 
     dssp.mangDS[id] = spNew
   }
-  document.querySelector('.themSP').innerHTML = `< button onclick = "themSP()" type = "button" id = "btnThem" > Thêm sản phẩm</ > `
+  document.querySelector('.themSP').innerHTML = `<button onclick = "themSP()" type = "button" id = "btnThem" >Thêm sản phẩm</button>`
   clearData()
   randomInput()
   setLocal()
@@ -195,7 +201,7 @@ const clearData = () => {
 const deleteall = () => {
   if (confirm('Dữ liệu đã được thêm sẽ được xóa hết. Nhấn Yes để XÓA hoặc CANCEL để hủy hành động này.')) {
     dssp.mangDS = [];
-    getMyEle('#tblDanhSachSP').innerHTML = `< tr > <td colspan="7">Dữ liệu trống</td></ > `
+    getMyEle('#tblDanhSachSP').innerHTML = `<tr> <td colspan="7">Dữ liệu trống</td></tr> `
     getMyEle('#tfDanhSachSP').innerHTML = ''
     setLocal();
     return true
