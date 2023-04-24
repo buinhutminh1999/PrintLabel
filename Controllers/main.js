@@ -78,7 +78,7 @@ const printAll = () => {
   <div class="content__right">
     <p>${item.inpType}</p>
   <p>TKL: ${item.inpKTL}  KLH: ${item.inpKLH}</p>
-  <p>KLV: ${item.inpKLV}</p>
+  <p class="klv">KLV: ${item.inpKLV}</p>
   <p>CH: ${item.inpCH}
   </div>
    </div>`

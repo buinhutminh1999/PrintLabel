@@ -1,27 +1,33 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body,html{
+body,
+html {
     font-family: Tahoma;
-    font-size: 6px;
+    font-size: 7px;
     font-weight: bold;
     background: gray;
 }
 
-.label{
+.label {
     /* height: 9.2604mm;
     width: 80mm;   */
     display: flex;
     text-align: center;
     align-items: center;
     background: white;
-    padding: 1mm;
+    padding: 0.6mm;
 }
 
-.content__left, .content__right{
+.content__left,
+.content__right {
     width: 20mm;
     text-align: center;
+}
+
+.klv {
+    background: red;
 }
