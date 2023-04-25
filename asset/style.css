@@ -19,7 +19,7 @@ html {
     text-align: center;
     align-items: center;
     background: white;
-    padding: 0.6mm;
+    padding: 0.6mm 0;
 }
 
 .content__left,
@@ -29,5 +29,6 @@ html {
 }
 
 .klv {
-    background: red;
+    background: black;
+    color: white;
 }
