@@ -4,6 +4,7 @@ Source code được phát triển bởi BuiNhutMinh
 import SanPham from "../Modal/Product.js";
 import Validation from "./Validation.js";
 import DanhSachSanPham from "./DanhSachSanPham.js";
+
 const validation = new Validation();
 const dssp = new DanhSachSanPham();
 function toggleFullScreen() {
@@ -86,7 +87,7 @@ const printAll = () => {
     <p>${item.inpType} - HLV: ${item.inpHLV}</p>
   <p>TKL: ${item.inpKTL} </p>
  <p>KLH: ${item.inpKLH}</p>
-  <p >KLV: ${item.inpKLV} - ${Number(item.inpKLV * 3.75).toFixed(2)}g</p>
+  <p >KLV: ${item.inpKLV} Chỉ (${math.round( item.inpKLV* 3.75,2)} g)</p>
   <p>CH: ${item.inpCH}</p>
   </div>
    </div>`;

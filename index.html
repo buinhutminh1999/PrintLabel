@@ -19,7 +19,7 @@
 </head>
 <link rel="stylesheet" href="./asset/main.css">
 
-<body >
+<body>
   <header class="">
     <div class="container text-center d-flex justify-content-center align-items-center">
       <div class="icon">
@@ -33,107 +33,106 @@
   </header>
 
   <section class="addProduct p-5 text-dark">
- <div class="row">
-  <form class="col-3">
     <div class="row">
-        <div class="form-group col-12">
+      <form class="col-3">
+        <div class="row">
+          <div class="form-group col-12">
             <label for="exampleInputPassword1">Loại sản phẩm</label>
             <select class="custom-select formProduct" id="inpType">
               <option>Chọn loại sản phẩm</option>
-                <option>Nhẫn nam</option>
-                <option>Nhẫn nữ</option>
-                <option>Bông</option>
-                <option>Dây</option>
-                <option>Lắc</option>
-                <option>Mặt</option>
-                <option>Vàng 610</option>
-                <option>Vàng 600</option>
-                <option>Vòng</option>
+              <option>Nhẫn nam</option>
+              <option>Nhẫn nữ</option>
+              <option>Bông</option>
+              <option>Dây</option>
+              <option>Lắc</option>
+              <option>Mặt</option>
+              <option>Vàng 610</option>
+              <option>Vàng 600</option>
+              <option>Vòng</option>
             </select>
             <div class="invalid-feedback valid8"></div>
-        </div>
-        <div class="form-group col-12">
-          <label for="exampleInputPassword1">HLV</label>
-          <select class="custom-select formProduct" id="inpHLV">
+          </div>
+          <div class="form-group col-12">
+            <label for="exampleInputPassword1">HLV</label>
+            <select class="custom-select formProduct" id="inpHLV">
               <option>610</option>
               <option>600</option>
-          </select>
-      </div>
-        <div class="form-group col-12">
+            </select>
+          </div>
+          <div class="form-group col-12">
             <label for="exampleInputPassword1">Khối lượng tổng (TKL)</label>
             <input type="text" class="form-control formProduct" id="inpKTL">
             <div class="invalid-feedback valid2"></div>
-        </div>
-        <div class="form-group col-12">
+          </div>
+          <div class="form-group col-12">
             <label for="exampleInputPassword1">Khối lượng hột (KLH)</label>
             <input type="text" class="form-control formProduct" id="inpKLH">
             <div class="invalid-feedback valid3"></div>
-        </div>
-        
-        <div class="form-group col-12">
+          </div>
+
+          <div class="form-group col-12">
             <label for="exampleInputPassword1">Khối lượng vàng (KLV)</label>
             <input type="text" class="form-control formProduct" id="inpKLV">
             <div class="invalid-feedback valid5"></div>
+          </div>
+
+          <div class="form-group col-12">
+            <label for="exampleInputPassword1">Công hột (CH)</label>
+            <input type="text" class="form-control formProduct" id="inpCH">
+            <div class="invalid-feedback valid4"></div>
+          </div>
+
+          <div class="form-group col-12 d-none">
+            <label for="exampleInputPassword1">ID SP</label>
+            <input type="text" class="form-control formProduct" id="idProDuct" value="">
+            <div class="invalid-feedback valid5"></div>
+          </div>
+
+
         </div>
+        <div class="themSP d-flex">
+          <button onclick="themSP()" type="button" id="btnThem">Thêm sản phẩm</button>
 
-        <div class="form-group col-12">
-          <label for="exampleInputPassword1">Công hột (CH)</label>
-          <input type="text" class="form-control formProduct" id="inpCH">
-          <div class="invalid-feedback valid4"></div>
+        </div>
+        <!-- <button class="btn btn-success">Cập nhật sản phẩm</button> -->
+      </form>
+      <div class="col-9">
+        <table class="table table-striped text-center ">
+          <thead>
+            <th scope="col">#</th>
+            <th scope="col">Loại SP</th>
+            <th scope="col">HLV</th>
+            <th scope="col">Khối lượng tổng</th>
+            <th scope="col">Khối lượng hột</th>
+            <th scope="col">Khối lượng vàng</th>
+            <th scope="col">Công hột</th>
+            <th scope="col"></th>
+          </thead>
+          <tbody id="tblDanhSachSP">
+            <tr>
+              <td colspan="7">Dữ liệu trống</td>
+            </tr>
+          </tbody>
+          <tfoot id="tfDanhSachSP" class="">
+
+          </tfoot>
+        </table>
       </div>
-
-        <div class="form-group col-12 d-none">
-          <label for="exampleInputPassword1">ID SP</label>
-          <input type="text" class="form-control formProduct" id="idProDuct" value="">
-          <div class="invalid-feedback valid5"></div>
-      </div>
-      
-
     </div>
-   <div class="themSP d-flex">
-    <button onclick="themSP()" type="button" id="btnThem">Thêm sản phẩm</button>
-   
-   </div>
-   <!-- <button class="btn btn-success">Cập nhật sản phẩm</button> -->
-</form>
-<div class="col-9">
-  <table class="table table-striped text-center ">
-    <thead>
-      <th scope="col">#</th>
-      <th scope="col">Loại SP</th>
-      <th scope="col">HLV</th>
-      <th scope="col">Khối lượng tổng</th>
-      <th scope="col">Khối lượng hột</th>
-      <th scope="col" >Khối lượng vàng</th>
-      <th scope="col">Công hột</th>
-      <th scope="col"></th>
-    </thead>
-    <tbody id="tblDanhSachSP">
-      <tr><td colspan="7">Dữ liệu trống</td></tr>
-    </tbody>
-    <tfoot id="tfDanhSachSP" class="">
-      
-    </tfoot>
-  </table>
-</div>
- </div>
   </section>
 
-</div>
+  </div>
 
-<div class="labelProDuct" style="display: none;">
-  
-</div>
+  <div class="labelProDuct" style="display: none;">
+
+  </div>
   <footer class="footer">
     <p class="text-center">Design by Bui Nhut Minh</p>
   </footer>
-   <!-- Optional JavaScript -->
+  <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-    crossorigin="anonymous"></script>
-
-    <script type="module" src="./Controllers/main.js"></script>
+  <script type="module" src="./Controllers/main.js"></script>
 </body>
+
 </html>
