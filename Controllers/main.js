@@ -74,13 +74,16 @@ const printAll = () => {
     return ` <div class="label">
     <br>
   <div class="content__left">
-    <p>TV Phương Thảo</p>
+    <p>NPP: DNTN TV Phương Thảo</p>
     <p>2297 Trần Hưng Đạo, Mỹ Thới, LXAG</p>
+    <p>NSX: CTY TNHH TV MỸ THÀNH MUM-1337 Trần Hưng Đạo, Mỹ Long, LXAG</p>
+    <p>TCCS 04:2024/M.TH</p>
+    <p>Xuất xứ: Việt Nam</p>
   </div>
   <div class="content__right">
     <p>${item.inpType}</p>
   <p>TKL: ${item.inpKTL}  KLH: ${item.inpKLH}</p>
-  <span class="klv">KLV: ${item.inpKLV}</span>
+  <p >KLV: ${item.inpKLV}</p>
   <p>CH: ${item.inpCH}
   </div>
    </div>`;

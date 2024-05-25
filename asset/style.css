@@ -7,28 +7,25 @@
 body,
 html {
     font-family: Tahoma;
-    font-size: 7px;
-    font-weight: bold;
     background: gray;
+    font-weight: bold;
 }
 
 .label {
-    /* height: 9.2604mm;
-    width: 80mm;   */
     display: flex;
-    text-align: center;
     align-items: center;
     background: white;
-    padding: 0.6mm 0;
+    width: 86mm;
+    padding: 0.7mm 0 0 0.3mm ;
 }
-
 .content__left,
 .content__right {
-    width: 20mm;
-    text-align: center;
+    width: 28mm;
+}
+.content__left{
+    font-size: 5.4px;
+}
+.content__right {
+    font-size: 7px;
 }
 
-.klv {
-    background: black;
-    color: white;
-}
