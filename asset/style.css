@@ -16,7 +16,8 @@ html {
     align-items: center;
     background: white;
     width: 86mm;
-    padding: 0.7mm 0 0 0.3mm ;
+    /* padding: 0.1mm 0 0 0.3mm ; */
+    padding: 0 0 0 0.3mm ;
 }
 .content__left,
 .content__right {
@@ -27,5 +28,6 @@ html {
 }
 .content__right {
     font-size: 6px;
+    text-align: center;
 }
 

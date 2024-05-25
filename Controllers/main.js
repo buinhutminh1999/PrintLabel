@@ -34,6 +34,7 @@ const getMyEleAll = (select) => {
 };
 
 const renderSP = (mang) => {
+  console.log("mang", mang);
   if (dssp.mangDS.length == 0) {
     // nếu dữ liệu trống trả về dữ liệu trống
     getMyEle(
@@ -43,10 +44,11 @@ const renderSP = (mang) => {
   } else {
     let count = 0;
     let newArr = mang.map((item, index) => {
-      let { inpType, inpKTL, inpKLH, inpCH, inpKLV } = item;
+      let { inpType, inpHLV, inpKTL, inpKLH, inpCH, inpKLV } = item;
       return `<tr id="test">
     <td>${++count}</td>
     <td>${inpType}</td>
+    <td>${inpHLV}</td>
     <td>${inpKTL}</td>
     <td>${inpKLH}</td>
     <td>${inpKLV}</td>
@@ -81,14 +83,15 @@ const printAll = () => {
     <p>Xuất xứ: Việt Nam</p>
   </div>
   <div class="content__right">
-    <p>${item.inpType}</p>
+    <p>${item.inpType} - HLV: ${item.inpHLV}</p>
   <p>TKL: ${item.inpKTL} </p>
- <p> KLH: ${item.inpKLH}</p>
-  <p >KLV: ${item.inpKLV}</p>
-  <p>CH: ${item.inpCH}
+ <p>KLH: ${item.inpKLH}</p>
+  <p >KLV: ${item.inpKLV} - ${Number(item.inpKLV * 3.75).toFixed(2)}g</p>
+  <p>CH: ${item.inpCH}</p>
   </div>
    </div>`;
   });
+
   document.querySelector(".labelProDuct").innerHTML = newArr.join("");
 
   getLocal();
@@ -121,12 +124,15 @@ const themSP = () => {
     let { id, value } = element;
     productVal = { ...productVal, [id]: value };
   }
-  let { inpType, inpKTL, inpKLH, inpCH, inpKLV, idProDuct } = productVal; // giá trị của obj
+  let { inpType, inpHLV, inpKTL, inpKLH, inpCH, inpKLV, idProDuct } =
+    productVal; // giá trị của obj
+  console.log(inpType, inpHLV, inpKTL, inpKLH, inpCH, inpKLV, idProDuct);
   let isValid = true;
   isValid &= validation.kiemtraType();
   if (isValid) {
     let sp = new SanPham(
       inpType,
+      inpHLV,
       inpKTL.replace(/\s/g, ""),
       inpKLH.replace(/\s/g, ""),
       inpCH.replace(/\s/g, ""),
@@ -180,8 +186,16 @@ let updateSP = (id) => {
     let { id, value } = element;
     objUpdate = { ...objUpdate, [id]: value };
   }
-  let { inpType, inpKTL, inpKLH, inpCH, inpKLV, idProDuct } = objUpdate;
-  let spNew = new SanPham(inpType, inpKTL, inpKLH, inpCH, inpKLV, idProDuct);
+  let { inpType, inpHLV, inpKTL, inpKLH, inpCH, inpKLV, idProDuct } = objUpdate;
+  let spNew = new SanPham(
+    inpType,
+    inpHLV,
+    inpKTL,
+    inpKLH,
+    inpCH,
+    inpKLV,
+    idProDuct
+  );
 
   // ví dụ code cũ để cập nhật được thì cho dssp.mangds[vitri] = update (update là obj)
   for (const index in dssp.mangDS[id]) {
