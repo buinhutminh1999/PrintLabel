@@ -16,18 +16,19 @@ html {
     align-items: center;
     background: white;
     width: 86mm;
-    /* padding: 0.1mm 0 0 0.3mm ; */
-    padding: 0 0 0 0.3mm ;
+    /* padding: 0 0 0 0.3mm ; */
 }
 .content__left,
 .content__right {
     width: 28mm;
+    /* margin-top:3px; */
+    text-align: center;
 }
 .content__left{
     font-size: 5.4px;
+    margin-left: -3px;
 }
 .content__right {
-    font-size: 6px;
-    text-align: center;
+    font-size: 6.4px;
 }
 
