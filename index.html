@@ -53,7 +53,7 @@
             <div class="invalid-feedback valid8"></div>
           </div>
           <div class="form-group col-12">
-            <label for="exampleInputPassword1">HLV</label>
+            <label for="exampleInputPassword1">Hàm lượng vàng (HLV)</label>
             <select class="custom-select formProduct" id="inpHLV">
               <option>610</option>
               <option>600</option>
@@ -70,15 +70,15 @@
             <div class="invalid-feedback valid3"></div>
           </div>
 
-          <div class="form-group col-12">
+          <!-- <div class="form-group col-12">
             <label for="exampleInputPassword1">Khối lượng vàng (KLV)</label>
             <input type="text" class="form-control formProduct" id="inpKLV">
             <div class="invalid-feedback valid5"></div>
-          </div>
+          </div> -->
 
           <div class="form-group col-12">
             <label for="exampleInputPassword1">Công hột (CH)</label>
-            <input type="text" class="form-control formProduct" id="inpCH">
+            <input type="text" class="form-control formProduct" id="inpCH" value=".000">
             <div class="invalid-feedback valid4"></div>
           </div>
 
@@ -101,7 +101,7 @@
           <thead>
             <th scope="col">#</th>
             <th scope="col">Loại SP</th>
-            <th scope="col">HLV</th>
+            <th scope="col">Hàm Lượng Vàng</th>
             <th scope="col">Khối lượng tổng</th>
             <th scope="col">Khối lượng hột</th>
             <th scope="col">Khối lượng vàng</th>
@@ -132,6 +132,8 @@
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.2/math.js" integrity="sha512-34c+czbe1JJMtTH6ebtsJdIa1K3lNsxDC92M3PBI0bACg7nu+DhHwfRS2Zc2qtbyPWKHLTgoxsMrArG4Myx4AQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <script type="module" src="./Controllers/main.js"></script>
 </body>
 
