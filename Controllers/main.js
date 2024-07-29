@@ -56,7 +56,7 @@ const renderSP = (mang) => {
     <td>${inpKLH} Chỉ - ${KLHG} g</td>
     <td>${inpKLV} Chỉ - ${KLVG} g</td>
     <td>${inpCH}</td>
-    <td>
+    <td >
     <button onclick="xoaSP(${index})"><i class="fa-solid fa-trash"></i></button>
     </td>
     </tr>`;
