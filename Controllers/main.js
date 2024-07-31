@@ -45,25 +45,24 @@ const renderSP = (mang) => {
   } else {
     let count = 0;
     let newArr = mang.map((item, index) => {
-      let { inpType, inpHLV, inpKTL, inpKLH, inpCH } = item;
-      let klt = math.round(inpKTL * 3.75,2)
-      let klh = math.round(inpKLH * 3.75,2)
-      let klv = math.round((inpKTL - inpKLH) * 3.75,2)
-      return `<tr id="test">
+      let { inpType, inpHLV, inpKTL, KTLG, inpKLH, KLHG, inpCH, inpKLV, KLVG } =
+        item;
+
+      return `<tr onclick="xemSP(${index})">
     <td>${++count}</td>
     <td>${inpType}</td>
     <td>${inpHLV}</td>
-    <td>${inpKTL} Chỉ - ${klt} g</td>
-    <td>${`${inpKLH} Chỉ`} - ${klh} g</td>
-    <td>${math.evaluate(`${inpKTL - inpKLH}`)} Chỉ - ${klv} g</td>
+    <td>${inpKTL} Chỉ - ${KTLG} g</td>
+    <td>${inpKLH} Chỉ - ${KLHG} g</td>
+    <td>${inpKLV} Chỉ - ${KLVG} g</td>
     <td>${inpCH}</td>
-    <td>
+    <td >
     <button onclick="xoaSP(${index})"><i class="fa-solid fa-trash"></i></button>
     </td>
     </tr>`;
     });
     getMyEle("#tfDanhSachSP").innerHTML = `<tr>
-    <td class="text-right" colspan="7">
+    <td class="text-right" colspan="8">
     <div class="d-flex align-items-center justify-content-end">
     <button onclick="deleteall()">Xóa tất cả</button>
     <a href="./View/printlabel.html" target="_blank" class="printALL">In tất cả</a>
@@ -87,9 +86,9 @@ const printAll = () => {
   </div>
   <div class="content__right">
     <p>${item.inpType} - HLV: ${item.inpHLV}</p>
-  <p>TKL: ${item.inpKTL} Chỉ (${math.round(item.inpKTL * 3.75,2)} g)</p>
- <p>KLH: ${item.inpKLH} Chỉ (${math.round(item.inpKLH * 3.75,2)} g)</p>
-  <p >KLV: ${item.inpKLV} Chỉ (${math.round(item.inpKLV * 3.75,2)} g)</p>
+  <p>TKL: ${item.inpKTL} Chỉ (${item.KTLG} g)</p>
+ <p>KLH: ${item.inpKLH} Chỉ (${item.KLHG} g)</p>
+  <p >KLV: ${item.inpKLV} Chỉ (${item.KLVG} g)</p>
   <p>CH: ${item.inpCH}</p>
   </div>
    </div>`;
@@ -117,39 +116,6 @@ const getLocal = () => {
 
 getLocal();
 
-// const themSP = () => {
-//   let productVal = {};
-
-//   let allProduct = getMyEleAll(".formProduct");
-//   console.log(allProduct);
-
-//   for (const element of allProduct) {
-//     let { id, value } = element;
-//     productVal = { ...productVal, [id]: value };
-//   }
-//   let { inpType, inpHLV, inpKTL, inpKLH, inpCH, inpKLV, idProDuct } =
-//     productVal; // giá trị của obj
-//   console.log(inpType, inpHLV, inpKTL, inpKLH, inpCH, inpKLV, idProDuct);
-//   let isValid = true;
-//   isValid &= validation.kiemtraType();
-//   if (isValid) {
-//     let sp = new SanPham(
-//       inpType,
-//       inpHLV,
-//       inpKTL.replace(/\s/g, ""),
-//       inpKLH.replace(/\s/g, ""),
-//       inpCH.replace(/\s/g, ""),
-//       inpKLV.replace(/\s/g, ""),
-//       idProDuct.replace(/\s/g, "")
-//     );
-//     dssp.themSP(sp);
-//     renderSP(dssp.mangDS);
-//     clearData();
-//     setLocal();
-//     randomInput();
-//   }
-// };
-
 const themSP = () => {
   let productVal = {};
 
@@ -160,8 +126,7 @@ const themSP = () => {
     let { id, value } = element;
     productVal = { ...productVal, [id]: value };
   }
-  let { inpType, inpHLV, inpKTL, inpKLH, inpCH, idProDuct } =
-    productVal; // giá trị của obj
+  let { inpType, inpHLV, inpKTL, inpKLH, inpCH, idProDuct } = productVal; // giá trị của obj
   let isValid = true;
   isValid &= validation.kiemtraType();
   if (isValid) {
@@ -169,12 +134,15 @@ const themSP = () => {
       inpType,
       inpHLV,
       inpKTL.replace(/\s/g, ""),
+      math.round(inpKTL * 3.75, 2),
       inpKLH.replace(/\s/g, ""),
+      math.round(inpKLH * 3.75, 2),
       inpCH.replace(/\s/g, ""),
-      math.evaluate(`${inpKTL - inpKLH}`),
+      math.round(inpKTL - inpKLH, 3),
+      math.round((inpKTL - inpKLH) * 3.75, 2),
       idProDuct.replace(/\s/g, "")
     );
-    console.log('sp',sp);
+    console.log("sp", sp);
     dssp.themSP(sp);
     renderSP(dssp.mangDS);
     clearData();
@@ -182,7 +150,6 @@ const themSP = () => {
     randomInput();
   }
 };
-
 
 window.themSP = themSP;
 
@@ -202,8 +169,13 @@ const xemSP = (id) => {
  <button type="button" onclick="huyBoHD()">Hủy bỏ</button>`;
 
   for (const element in dssp.mangDS[id]) {
-    if(element !== 'inpKLV')
-    document.getElementById(element).value = dssp.mangDS[id][element]; //obj: dssp.mangDS[id] [element]:gọi đến key của đt ]
+    if (
+      element !== "inpKLV" &&
+      element !== "KTLG" &&
+      element !== "KLHG" &&
+      element !== "KLVG"
+    )
+      document.getElementById(element).value = dssp.mangDS[id][element]; //obj: dssp.mangDS[id] [element]:gọi đến key của đt ]
   }
 };
 
@@ -228,11 +200,14 @@ let updateSP = (id) => {
   let spNew = new SanPham(
     inpType,
     inpHLV,
-    inpKTL,
-    inpKLH,
-    inpCH,
-    math.round((inpKTL - inpKLH) * 3.75,2),
-    idProDuct
+    inpKTL.replace(/\s/g, ""),
+    math.round(inpKTL * 3.75, 2),
+    inpKLH.replace(/\s/g, ""),
+    math.round(inpKLH * 3.75, 2),
+    inpCH.replace(/\s/g, ""),
+    math.round(inpKTL - inpKLH, 3),
+    math.round((inpKTL - inpKLH) * 3.75, 2),
+    idProDuct.replace(/\s/g, "")
   );
 
   // ví dụ code cũ để cập nhật được thì cho dssp.mangds[vitri] = update (update là obj)
@@ -259,7 +234,13 @@ randomInput();
 const clearData = () => {
   let allProduct = getMyEleAll(".formProduct");
   for (const element of allProduct) {
-    document.getElementById(element.id).value = "";
+    if (element.id === "inpCH") {
+      document.getElementById("inpCH").value = ".000";
+    } else if (element.id === "inpHLV") {
+      document.getElementById("inpHLV").value = "610";
+    } else {
+      document.getElementById(element.id).value = "";
+    }
   }
 };
 
@@ -273,7 +254,7 @@ const deleteall = () => {
     getMyEle(
       "#tblDanhSachSP"
     ).innerHTML = `<tr> <td colspan="7">Dữ liệu trống</td></tr> `;
-    getMyEle("#tfDanhSachSP").innerHTML = "";
+    getMyEle("#tblDanhSachSP").innerHTML = "";
     setLocal();
     return true;
   }
