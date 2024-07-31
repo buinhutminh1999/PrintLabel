@@ -1,171 +1,78 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body {
-  background: url(https://images.unsplash.com/photo-1624365168056-daf44387e2ae?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+body{
+  background: url(https://images.pexels.com/photos/47047/gold-ingots-golden-treasure-47047.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  color: white;
-  line-height: 1.7;
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
 }
 
-button {
-  background: #e0e0e0;
-  box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2),
-    -8px -8px 16px 0 rgba(255, 255, 255, 0.5);
-  transition: all 0.3s ease-in-out;
-}
+body,
+html {
+    color: white;
+    line-height: 1.7;
+    /* font-size: 14px; */
+    font-weight: 400;
+    font-family: Lato, sans-serif;
 
-button:hover {
-  transform: translate(2px, 2px);
-  box-shadow: none;
 }
 
 header {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  padding: 20px;
-  margin: 20px;
+    /* background: #e7c8b2; */
 }
-
+   
 button {
-  background-image: linear-gradient(to right,
-      #000000 0%,
-      #434343 51%,
-      #000000 100%);
-  margin: 5px;
-  padding: 5px 15px;
-  text-align: center;
-  text-transform: uppercase;
-  transition: all 0.5s;
-  background-size: 200% auto;
-  color: white;
-  box-shadow: 0 0 20px #eee;
-  border-radius: 10px;
-  display: block;
+    background-image: linear-gradient(to right, #000000 0%, #434343  51%, #000000  100%);
+    margin: 5px;
+    padding: 5px 15px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+  }
+
+  button:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .printALL{
+    background-image: linear-gradient(to right, #000000 0%, #434343  51%, #000000  100%);
+    margin: 5px;
+    padding: 8px 15px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+  }
+ 
+  .printALL:hover{
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;  
 }
 
-button:hover {
-  background-position: right center;
-  color: #fff;
-  text-decoration: none;
-}
-
-.printALL {
-  background-image: linear-gradient(to right,
-      #000000 0%,
-      #434343 51%,
-      #000000 100%);
-  margin: 5px;
-  padding: 8px 15px;
-  text-align: center;
-  text-transform: uppercase;
-  transition: all 0.5s;
-  background-size: 200% auto;
-  color: white;
-  box-shadow: 0 0 20px #eee;
-  border-radius: 10px;
-}
-
-.printALL:hover {
-  background-position: right center;
-  color: #fff;
-  text-decoration: none;
-}
-
-.table {
+.table{
   opacity: 0.9;
-  color: white;
-  border-collapse: collapse;
-  /* Đảm bảo các ô trong bảng không cách nhau */
-  width: 100%;
-  /* Đảm bảo bảng có chiều rộng đầy đủ */
+    background-image: linear-gradient(to right, #232526 0%, #414345 51%, #232526 100%);
+    color: white;
 }
 
-.table th,
-.table td {
-  border: 1px solid #fff;
-  /* Định dạng viền cho các ô */
-  padding: 8px;
-  /* Đảm bảo phần nội dung không sát vào viền */
-}
-
-.table th {
-  background-color: #393e46;
-  /* Màu nền cho dòng tiêu đề */
-}
-
-.table tbody tr:nth-child(odd) {
-  background-color: #303841;
-  /* Màu nền xen kẽ cho các dòng */
-}
-
-.table tbody tr:nth-child(even) {
-  background-color: #3a4750;
-  /* Màu nền xen kẽ cho các dòng */
-}
-
-.table tbody td:last-child {
-  width: 100px;
-  /* Đảm bảo cột cuối cùng có chiều rộng cố định */
-}
-
-.table tbody td:last-child button {
-  background-color: #ff5722;
-  /* Màu nút xóa */
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.table tbody td:last-child button:hover {
-  background-color: #ff7043;
-  /* Màu nút xóa khi hover */
-}
-
-label {
+label{
   font-weight: bold;
   color: white;
 }
 
-.addProduct {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  padding: 20px;
-  margin: 20px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.formProduct {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
-  border-radius: 10px;
-  color: white;
-}
-
-.formProduct option {
-  color: black;
-}
-
-.footer {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  padding: 10px;
-  margin: 20px;
-  text-align: center;
-}
