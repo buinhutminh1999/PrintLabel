@@ -79,7 +79,8 @@ const printAll = () => {
     <br>
   <div class="content__left">
     <p>NSX & NPP: DNTN TV Phương Thảo</p>
-    <p>2297 Trần Hưng Đạo, Mỹ Thới, LXAG</p>
+    <p>ĐC: Số 2297, Trần Hưng Đạo,</p>
+    <p>Khóm An Hưng, P.Mỹ Thới, T.An Giang</p>
     <p>TCCS 02:2026/PTAG</p>
     <p>Xuất xứ: Việt Nam</p>
   </div>
