@@ -78,18 +78,17 @@ const printAll = () => {
     return ` <div class="label">
     <br>
   <div class="content__left">
-    <p>NPP: DNTN TV Phương Thảo</p>
+    <p>NSX & NPP: DNTN TV Phương Thảo</p>
     <p>2297 Trần Hưng Đạo, Mỹ Thới, LXAG</p>
-    <p>NSX: CTY TNHH TV MỸ THÀNH MUM-1337 Trần Hưng Đạo, Mỹ Long, LXAG</p>
-    <p>TCCS 04:2024/M.TH</p>
+    <p>TCCS 02:2026/PTAG</p>
     <p>Xuất xứ: Việt Nam</p>
   </div>
   <div class="content__right">
     <p>${item.inpType} - HLV: ${item.inpHLV}</p>
-  <p>TKL: ${item.inpKTL} Chỉ (${item.KTLG} g)</p>
- <p>KLH: ${item.inpKLH} Chỉ (${item.KLHG} g)</p>
-  <p >KLV: ${item.inpKLV} Chỉ (${item.KLVG} g)</p>
-  <p>CH: ${item.inpCH}</p>
+    <p>TKL: ${item.inpKTL} Chỉ (${item.KTLG} g)</p>
+    <p>KLH: ${item.inpKLH} Chỉ (${item.KLHG} g)</p>
+    <p>KLV: ${item.inpKLV} Chỉ (${item.KLVG} g)</p>
+    <p>CH: ${item.inpCH}</p>
   </div>
    </div>`;
   });
@@ -137,7 +136,7 @@ const themSP = () => {
       math.round(inpKTL * 3.75, 2),
       inpKLH.replace(/\s/g, ""),
       math.round(inpKLH * 3.75, 2),
-      inpCH.replace(/\s/g, ""),
+      (inpCH || "").trim(),
       math.round(inpKTL - inpKLH, 3),
       math.round((inpKTL - inpKLH) * 3.75, 2),
       idProDuct.replace(/\s/g, "")
@@ -174,8 +173,13 @@ const xemSP = (id) => {
       element !== "KTLG" &&
       element !== "KLHG" &&
       element !== "KLVG"
-    )
-      document.getElementById(element).value = dssp.mangDS[id][element]; //obj: dssp.mangDS[id] [element]:gọi đến key của đt ]
+    ) {
+      const el = document.getElementById(element);
+      if (el) {
+        const val = dssp.mangDS[id][element] || "";
+        el.value = element === "inpCH" ? formatNumberWithDots(val) : val;
+      }
+    }
   }
 };
 
@@ -204,7 +208,7 @@ let updateSP = (id) => {
     math.round(inpKTL * 3.75, 2),
     inpKLH.replace(/\s/g, ""),
     math.round(inpKLH * 3.75, 2),
-    inpCH.replace(/\s/g, ""),
+    (inpCH || "").trim(),
     math.round(inpKTL - inpKLH, 3),
     math.round((inpKTL - inpKLH) * 3.75, 2),
     idProDuct.replace(/\s/g, "")
@@ -231,12 +235,46 @@ const randomInput = () => {
 
 randomInput();
 
+const formatNumberWithDots = (val) => {
+  if (val === null || val === undefined) return "";
+  let raw = val.toString().replace(/\D/g, "");
+  if (!raw) return "";
+  raw = raw.replace(/^0+(?=\d)/, "");
+  return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+
+const setupMoneyInput = () => {
+  const inpCH = document.getElementById("inpCH");
+  if (!inpCH) return;
+
+  inpCH.addEventListener("input", (e) => {
+    const input = e.target;
+    const oldVal = input.value;
+    const oldCursor = input.selectionStart || 0;
+    const digitsBeforeCursor = (oldVal.slice(0, oldCursor).match(/\d/g) || []).length;
+
+    const formatted = formatNumberWithDots(oldVal);
+    input.value = formatted;
+
+    // Giữ vị trí con trỏ thông minh khi tự thêm dấu chấm
+    let newCursor = 0;
+    let digitsCount = 0;
+    while (newCursor < formatted.length && digitsCount < digitsBeforeCursor) {
+      if (/\d/.test(formatted[newCursor])) {
+        digitsCount++;
+      }
+      newCursor++;
+    }
+    input.setSelectionRange(newCursor, newCursor);
+  });
+};
+
+setupMoneyInput();
+
 const clearData = () => {
   let allProduct = getMyEleAll(".formProduct");
   for (const element of allProduct) {
-    if (element.id === "inpCH") {
-      document.getElementById("inpCH").value = ".000";
-    } else if (element.id === "inpHLV") {
+    if (element.id === "inpHLV") {
       document.getElementById("inpHLV").value = "610";
     } else {
       document.getElementById(element.id).value = "";
