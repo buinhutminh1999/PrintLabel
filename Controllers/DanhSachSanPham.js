@@ -1,4 +1,4 @@
-export default class DanhSachSanPham {
+class DanhSachSanPham {
     constructor() { }
     mangDS = [];
 

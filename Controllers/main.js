@@ -1,12 +1,17 @@
 /*
 Source code được phát triển bởi BuiNhutMinh
 */
-import SanPham from "../Modal/Product.js";
-import Validation from "./Validation.js";
-import DanhSachSanPham from "./DanhSachSanPham.js";
 
 const validation = new Validation();
 const dssp = new DanhSachSanPham();
+let currentEditId = null;
+
+const formatGram = (val) => {
+  const num = Number(val);
+  if (isNaN(num)) return "0.000";
+  return num.toFixed(3);
+};
+
 function toggleFullScreen() {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen();
@@ -20,7 +25,12 @@ document.addEventListener(
   "keydown",
   (e) => {
     if (e.key === "Enter") {
-      toggleFullScreen();
+      e.preventDefault();
+      if (currentEditId !== null) {
+        updateSP(currentEditId);
+      } else if (document.getElementById("btnThem")) {
+        themSP();
+      }
     }
   },
   false
@@ -75,21 +85,22 @@ const renderSP = (mang) => {
 
 const printAll = () => {
   let newArr = dssp.mangDS.map((item) => {
+    const tienCong = item.inpCH ? `${item.inpCH} VNĐ` : "0 VNĐ";
+    const klhChi = item.inpKLH || 0;
     return ` <div class="label">
-    <br>
   <div class="content__left">
-    <p>NSX & NPP: DNTN TV Phương Thảo</p>
-    <p>ĐC: Số 2297, Trần Hưng Đạo,</p>
-    <p>Khóm An Hưng, P.Mỹ Thới, T.An Giang</p>
-    <p>TCCS 02:2026/PTAG</p>
-    <p>Xuất xứ: Việt Nam</p>
+    <p class="product__title">${item.inpType}</p>
+    <p class="row-line"><span>KLT: ${formatGram(item.KTLG)} g</span><span>(${item.inpKTL || 0} Chỉ)</span></p>
+    <p class="row-line"><span>KLH: ${formatGram(item.KLHG)} g</span><span>(${klhChi} Chỉ)</span></p>
+    <p class="row-line"><span>KLV: ${formatGram(item.KLVG)} g</span><span>(${item.inpKLV || 0} Chỉ)</span></p>
+    <p class="row-line row-bottom"><span>TC: ${tienCong}</span><span>HLV: ${item.inpHLV}</span></p>
   </div>
   <div class="content__right">
-    <p>${item.inpType} - HLV: ${item.inpHLV}</p>
-    <p>TKL: ${item.inpKTL} Chỉ (${item.KTLG} g)</p>
-    <p>KLH: ${item.inpKLH} Chỉ (${item.KLHG} g)</p>
-    <p>KLV: ${item.inpKLV} Chỉ (${item.KLVG} g)</p>
-    <p>CH: ${item.inpCH}</p>
+    <p class="nsx__title">NSX: DNTN TV PHƯƠNG THẢO</p>
+    <p>ĐC: 2297 Trần Hưng Đạo, Khóm An Hưng,</p>
+    <p>P. Mỹ Thới, T. An Giang, Việt Nam</p>
+    <p>TCCS 01:2026/PT</p>
+    <p class="row-line"><span>Xuất xứ: Việt Nam</span><span>MKH: PTHAO</span></p>
   </div>
    </div>`;
   });
@@ -100,8 +111,6 @@ const printAll = () => {
 };
 
 window.printAll = printAll;
-
-export default printAll;
 
 const setLocal = () => {
   localStorage.setItem("DSSP", JSON.stringify(dssp.mangDS));
@@ -134,12 +143,12 @@ const themSP = () => {
       inpType,
       inpHLV,
       inpKTL.replace(/\s/g, ""),
-      math.round(inpKTL * 3.75, 2),
-      inpKLH.replace(/\s/g, ""),
-      math.round(inpKLH * 3.75, 2),
+      math.round(inpKTL * 3.75, 3),
+      inpKLH.replace(/\s/g, "") || "0",
+      math.round(inpKLH * 3.75, 3),
       (inpCH || "").trim(),
       math.round(inpKTL - inpKLH, 3),
-      math.round((inpKTL - inpKLH) * 3.75, 2),
+      math.round((inpKTL - inpKLH) * 3.75, 3),
       idProDuct.replace(/\s/g, "")
     );
     console.log("sp", sp);
@@ -206,12 +215,12 @@ let updateSP = (id) => {
     inpType,
     inpHLV,
     inpKTL.replace(/\s/g, ""),
-    math.round(inpKTL * 3.75, 2),
-    inpKLH.replace(/\s/g, ""),
-    math.round(inpKLH * 3.75, 2),
+    math.round(inpKTL * 3.75, 3),
+    inpKLH.replace(/\s/g, "") || "0",
+    math.round(inpKLH * 3.75, 3),
     (inpCH || "").trim(),
     math.round(inpKTL - inpKLH, 3),
-    math.round((inpKTL - inpKLH) * 3.75, 2),
+    math.round((inpKTL - inpKLH) * 3.75, 3),
     idProDuct.replace(/\s/g, "")
   );
 

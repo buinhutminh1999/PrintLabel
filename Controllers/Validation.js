@@ -1,4 +1,4 @@
-export default class Validation {
+class Validation {
   constructor(){}
     kiemtraType = () => { 
     if(document.getElementById('inpType').selectedIndex == 0 || document.getElementById('inpType').value == '' ){
