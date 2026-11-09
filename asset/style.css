@@ -23,23 +23,24 @@ html {
     align-items: flex-start;
     background: white;
     width: 86mm;
-    line-height: 1.12;
+    line-height: 1.1;
     page-break-inside: avoid;
     break-inside: avoid;
 }
 
 .content__left {
     width: 26mm;
-    font-size: 5px;
-    padding: 0 1.5mm 0 0;
+    font-size: 6.2px;
+    line-height: 1.1;
+    padding: 0 1.2mm 0 0;
 }
 
 .product__title {
-    font-size: 5.5px;
+    font-size: 6.6px;
     font-weight: bold;
     text-align: left;
     text-transform: uppercase;
-    line-height: 1.15;
+    line-height: 1.12;
 }
 
 .row-line {
@@ -54,21 +55,26 @@ html {
 }
 
 .content__right {
-    width: 27.6mm;
-    font-size: 4.5px;
-    letter-spacing: -0.1px;
+    width: 28mm;
+    font-size: 5.3px;
+    line-height: 1.14;
     text-align: center;
-    padding: 0 1.3mm;
+    padding: 0.2mm 1mm 0 1mm;
     white-space: nowrap;
 }
 
+.content__right p:nth-child(2) {
+    font-size: 4.8px;
+    letter-spacing: -0.15px;
+}
+
 .content__right .row-line {
-    padding: 0 0.3mm;
+    padding: 0 0.4mm;
 }
 
 .nsx__title {
     font-weight: bold;
-    font-size: 5px;
+    font-size: 5.8px;
     letter-spacing: 0;
     line-height: 1.15;
 }
