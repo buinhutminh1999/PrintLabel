@@ -6,10 +6,21 @@ const validation = new Validation();
 const dssp = new DanhSachSanPham();
 let currentEditId = null;
 
+const parseDecimal = (val) => {
+  if (val === null || val === undefined || val === "") return 0;
+  const normalized = val.toString().trim().replace(/,/g, ".");
+  const num = Number(normalized);
+  return isNaN(num) ? 0 : num;
+};
+
+const formatDecimal = (val) => {
+  if (val === null || val === undefined || val === "") return "0";
+  return val.toString().trim().replace(/\./g, ",");
+};
+
 const formatGram = (val) => {
-  const num = Number(val);
-  if (isNaN(num)) return "0.000";
-  return num.toFixed(3);
+  const num = parseDecimal(val);
+  return num.toFixed(3).replace(".", ",");
 };
 
 function toggleFullScreen() {
@@ -62,10 +73,10 @@ const renderSP = (mang) => {
     <td>${++count}</td>
     <td>${inpType}</td>
     <td>${inpHLV}</td>
-    <td>${inpKTL} Chỉ - ${KTLG} g</td>
-    <td>${inpKLH} Chỉ - ${KLHG} g</td>
-    <td>${inpKLV} Chỉ - ${KLVG} g</td>
-    <td>${inpCH}</td>
+    <td>${formatDecimal(inpKTL)} Chỉ - ${formatDecimal(KTLG)} g</td>
+    <td>${formatDecimal(inpKLH)} Chỉ - ${formatDecimal(KLHG)} g</td>
+    <td>${formatDecimal(inpKLV)} Chỉ - ${formatDecimal(KLVG)} g</td>
+    <td>${formatNumberWithCommas(inpCH)}</td>
     <td >
     <button onclick="xoaSP(${index})"><i class="fa-solid fa-trash"></i></button>
     </td>
@@ -85,14 +96,17 @@ const renderSP = (mang) => {
 
 const printAll = () => {
   let newArr = dssp.mangDS.map((item) => {
-    const tienCong = item.inpCH ? `${item.inpCH} VNĐ` : "0 VNĐ";
-    const klhChi = item.inpKLH || 0;
+    const chFormatted = formatNumberWithCommas(item.inpCH);
+    const tienCong = chFormatted ? `${chFormatted} VNĐ` : "0 VNĐ";
+    const ktlChi = formatDecimal(item.inpKTL || 0);
+    const klhChi = formatDecimal(item.inpKLH || 0);
+    const klvChi = formatDecimal(item.inpKLV || 0);
     return ` <div class="label">
   <div class="content__left">
     <p class="product__title">${item.inpType}</p>
-    <p class="row-line"><span>KLT: ${formatGram(item.KTLG)} g</span><span>(${item.inpKTL || 0} Chỉ)</span></p>
+    <p class="row-line"><span>KLT: ${formatGram(item.KTLG)} g</span><span>(${ktlChi} Chỉ)</span></p>
     <p class="row-line"><span>KLH: ${formatGram(item.KLHG)} g</span><span>(${klhChi} Chỉ)</span></p>
-    <p class="row-line"><span>KLV: ${formatGram(item.KLVG)} g</span><span>(${item.inpKLV || 0} Chỉ)</span></p>
+    <p class="row-line"><span>KLV: ${formatGram(item.KLVG)} g</span><span>(${klvChi} Chỉ)</span></p>
     <p class="row-line row-bottom"><span>TC: ${tienCong}</span><span>HLV: ${item.inpHLV}</span></p>
   </div>
   <div class="content__right">
@@ -112,13 +126,36 @@ const printAll = () => {
 
 window.printAll = printAll;
 
+const formatNumberWithCommas = (val) => {
+  if (val === null || val === undefined) return "";
+  let raw = val.toString().replace(/\D/g, "");
+  if (!raw) return "";
+  raw = raw.replace(/^0+(?=\d)/, "");
+  return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 const setLocal = () => {
   localStorage.setItem("DSSP", JSON.stringify(dssp.mangDS));
 };
 
 const getLocal = () => {
   if (localStorage.getItem("DSSP") != null) {
-    dssp.mangDS = JSON.parse(localStorage.getItem("DSSP"));
+    const rawList = JSON.parse(localStorage.getItem("DSSP"));
+    dssp.mangDS = rawList.map((item) => {
+      const ktlNum = parseDecimal(item.inpKTL);
+      const klhNum = parseDecimal(item.inpKLH);
+      return {
+        ...item,
+        inpKTL: formatDecimal(item.inpKTL || "0"),
+        KTLG: formatDecimal(math.round(ktlNum * 3.75, 3)),
+        inpKLH: formatDecimal(item.inpKLH || "0"),
+        KLHG: formatDecimal(math.round(klhNum * 3.75, 3)),
+        inpCH: formatNumberWithCommas(item.inpCH || ""),
+        inpKLV: formatDecimal(math.round(ktlNum - klhNum, 3)),
+        KLVG: formatDecimal(math.round((ktlNum - klhNum) * 3.75, 3)),
+      };
+    });
+    setLocal();
     renderSP(dssp.mangDS);
   }
 };
@@ -139,16 +176,18 @@ const themSP = () => {
   let isValid = true;
   isValid &= validation.kiemtraType();
   if (isValid) {
+    const ktlNum = parseDecimal(inpKTL);
+    const klhNum = parseDecimal(inpKLH);
     let sp = new SanPham(
       inpType,
       inpHLV,
-      inpKTL.replace(/\s/g, ""),
-      math.round(inpKTL * 3.75, 3),
-      inpKLH.replace(/\s/g, "") || "0",
-      math.round(inpKLH * 3.75, 3),
-      (inpCH || "").trim(),
-      math.round(inpKTL - inpKLH, 3),
-      math.round((inpKTL - inpKLH) * 3.75, 3),
+      formatDecimal(inpKTL.replace(/\s/g, "") || "0"),
+      formatDecimal(math.round(ktlNum * 3.75, 3)),
+      formatDecimal(inpKLH.replace(/\s/g, "") || "0"),
+      formatDecimal(math.round(klhNum * 3.75, 3)),
+      formatNumberWithCommas((inpCH || "").trim()),
+      formatDecimal(math.round(ktlNum - klhNum, 3)),
+      formatDecimal(math.round((ktlNum - klhNum) * 3.75, 3)),
       idProDuct.replace(/\s/g, "")
     );
     console.log("sp", sp);
@@ -171,6 +210,7 @@ const xoaSP = (id) => {
 window.xoaSP = xoaSP;
 
 const xemSP = (id) => {
+  currentEditId = id;
   document.querySelector(".themSP").innerHTML = `
 
   <button onclick="updateSP(${id})" type="button">Lưu</button>
@@ -187,7 +227,13 @@ const xemSP = (id) => {
       const el = document.getElementById(element);
       if (el) {
         const val = dssp.mangDS[id][element] || "";
-        el.value = element === "inpCH" ? formatNumberWithDots(val) : val;
+        if (element === "inpCH") {
+          el.value = formatNumberWithCommas(val);
+        } else if (element === "inpKTL" || element === "inpKLH") {
+          el.value = formatDecimal(val);
+        } else {
+          el.value = val;
+        }
       }
     }
   }
@@ -196,6 +242,7 @@ const xemSP = (id) => {
 window.xemSP = xemSP;
 
 const huyBoHD = () => {
+  currentEditId = null;
   getMyEle(
     ".themSP"
   ).innerHTML = `<button onclick = "themSP()" type="button" id ="btnThem" >Thêm sản phẩm</> `;
@@ -204,6 +251,7 @@ const huyBoHD = () => {
 window.huyBoHD = huyBoHD;
 
 let updateSP = (id) => {
+  currentEditId = null;
   let objUpdate = {};
   let productVal = getMyEleAll(".formProduct");
   for (const element of productVal) {
@@ -211,16 +259,18 @@ let updateSP = (id) => {
     objUpdate = { ...objUpdate, [id]: value };
   }
   let { inpType, inpHLV, inpKTL, inpKLH, inpCH, inpKLV, idProDuct } = objUpdate;
+  const ktlNum = parseDecimal(inpKTL);
+  const klhNum = parseDecimal(inpKLH);
   let spNew = new SanPham(
     inpType,
     inpHLV,
-    inpKTL.replace(/\s/g, ""),
-    math.round(inpKTL * 3.75, 3),
-    inpKLH.replace(/\s/g, "") || "0",
-    math.round(inpKLH * 3.75, 3),
-    (inpCH || "").trim(),
-    math.round(inpKTL - inpKLH, 3),
-    math.round((inpKTL - inpKLH) * 3.75, 3),
+    formatDecimal(inpKTL.replace(/\s/g, "") || "0"),
+    formatDecimal(math.round(ktlNum * 3.75, 3)),
+    formatDecimal(inpKLH.replace(/\s/g, "") || "0"),
+    formatDecimal(math.round(klhNum * 3.75, 3)),
+    formatNumberWithCommas((inpCH || "").trim()),
+    formatDecimal(math.round(ktlNum - klhNum, 3)),
+    formatDecimal(math.round((ktlNum - klhNum) * 3.75, 3)),
     idProDuct.replace(/\s/g, "")
   );
 
@@ -245,13 +295,33 @@ const randomInput = () => {
 
 randomInput();
 
-const formatNumberWithDots = (val) => {
-  if (val === null || val === undefined) return "";
-  let raw = val.toString().replace(/\D/g, "");
-  if (!raw) return "";
-  raw = raw.replace(/^0+(?=\d)/, "");
-  return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const setupDecimalInputs = () => {
+  ["inpKTL", "inpKLH"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener("input", (e) => {
+      const input = e.target;
+      const oldVal = input.value;
+      const oldCursor = input.selectionStart || 0;
+
+      // Đổi dấu chấm thành dấu phẩy và chỉ giữ số cùng tối đa 1 dấu phẩy
+      let cleaned = oldVal.replace(/\./g, ",").replace(/[^0-9,]/g, "");
+      const parts = cleaned.split(",");
+      if (parts.length > 2) {
+        cleaned = parts[0] + "," + parts.slice(1).join("");
+      }
+
+      if (cleaned !== oldVal) {
+        const diff = cleaned.length - oldVal.length;
+        input.value = cleaned;
+        const newCursor = Math.max(0, oldCursor + diff);
+        input.setSelectionRange(newCursor, newCursor);
+      }
+    });
+  });
 };
+
+setupDecimalInputs();
 
 const setupMoneyInput = () => {
   const inpCH = document.getElementById("inpCH");
@@ -263,10 +333,10 @@ const setupMoneyInput = () => {
     const oldCursor = input.selectionStart || 0;
     const digitsBeforeCursor = (oldVal.slice(0, oldCursor).match(/\d/g) || []).length;
 
-    const formatted = formatNumberWithDots(oldVal);
+    const formatted = formatNumberWithCommas(oldVal);
     input.value = formatted;
 
-    // Giữ vị trí con trỏ thông minh khi tự thêm dấu chấm
+    // Giữ vị trí con trỏ thông minh khi tự thêm dấu phẩy
     let newCursor = 0;
     let digitsCount = 0;
     while (newCursor < formatted.length && digitsCount < digitsBeforeCursor) {
